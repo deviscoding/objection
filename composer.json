@@ -1,0 +1,36 @@
+{
+  "name": "deviscoding/objection",
+  "description": "PHP Object Library",
+  "keywords": [
+    "php",
+    "object",
+    "url",
+    "useragent",
+    "browser",
+    "platform",
+    "html",
+    "pointer",
+    "os",
+    "headers"
+  ],
+  "homepage": "https://github.com/deviscoding/objection",
+  "version": "1.0",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "AMJones",
+      "homepage": "https://www.deviscoding.com"
+    }
+  ],
+  "autoload": {
+      "psr-4": {
+          "DevCoding\\Object\\": "src/Object",
+          "DevCoding\\Factory\\": "src/Factory",
+          "DevCoding\\Helper\\": "src/Helper"
+      }
+  },
+  "require": {
+    "ext-json": "*",
+    "symfony/property-access": "^3.4|^4.4|5.*"
+  }
+}
