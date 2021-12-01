@@ -1,2 +1,2 @@
 # objection
-PHP value object classes for a variety of usages
+PHP object classes for a variety of usages.
