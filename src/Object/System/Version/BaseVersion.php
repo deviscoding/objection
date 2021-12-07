@@ -13,6 +13,7 @@ use DevCoding\Helper\StringHelper;
  *
  * @author  AMJones <am@jonesiscoding.com>
  * @license https://github.com/deviscoding/objection/blob/main/LICENSE
+ *
  * @package DevCoding\Object\System\Version
  */
 abstract class BaseVersion
@@ -74,15 +75,24 @@ abstract class BaseVersion
    */
   public function __toString()
   {
-    return implode($this->toArray());
+    // Start off with major and minor.  Methods will return 0 if not set, so we'll always have these.
+    $str = implode('.', [$this->getMajor(), $this->getMinor()]);
+    // Add in the patch with the period prefix, if applicable.
+    $str .= ($patch = $this->getPatch()) ? '.'.$patch : '';
+    // Add in the prerelease with the dash prefix, if applicable.
+    $str .= ($pre = $this->getPreRelease()) ? '-'.$pre : '';
+    // Add in the build with the plus prefix, if applicable.
+    $str .= ($build = $this->getBuild()) ? '+'.$build : '';
+
+    return $str;
   }
 
   /**
    * @return int
    */
-  public function getMajor(): int
+  public function getMajor()
   {
-    return $this->major;
+    return $this->major ?? 0;
   }
 
   /**
@@ -90,7 +100,7 @@ abstract class BaseVersion
    */
   public function getMinor()
   {
-    return $this->minor;
+    return $this->minor ?? 0;
   }
 
   /**
