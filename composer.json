@@ -31,6 +31,7 @@
   },
   "require": {
     "ext-json": "*",
-    "symfony/property-access": "^3.4|^4.4|5.*"
+    "symfony/property-access": "^3.4|^4.4|5.*",
+    "psr/container": "^2.0"
   }
 }
