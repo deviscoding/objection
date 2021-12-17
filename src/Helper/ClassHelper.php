@@ -3,10 +3,11 @@
 namespace DevCoding\Helper;
 
 /**
- * @method  ClassHelper get();
+ * @method static ClassHelper get();
  *
  * @author  AMJones <am@jonesiscoding.com>
  * @license https://github.com/deviscoding/objection/blob/main/LICENSE
+ *
  * @package DevCoding\Helper
  */
 class ClassHelper
@@ -34,11 +35,11 @@ class ClassHelper
       {
         foreach (glob($dir.'/*.php') as $file)
         {
-          $fqcn = $namespace.'\\'.str_replace('.php', '', $file);
+          $fqcn = $namespace.'\\'.pathinfo($file, PATHINFO_FILENAME);
 
           if (class_exists($fqcn))
           {
-            $this->classes[$namespace] = $fqcn;
+            $this->classes[$namespace][] = $fqcn;
           }
         }
       }
@@ -62,7 +63,16 @@ class ClassHelper
     {
       if ($ns == $namespace)
       {
-        return $this->getProjectDir().$dir;
+        return $this->getProjectDir().'/'.$dir;
+      }
+      elseif (false !== strpos($namespace, $ns))
+      {
+        $part = str_replace($ns, '', $namespace);
+        $tDir = sprintf('%s/%s/%s', $this->getProjectDir(), $dir, str_replace('\\', '/', $part));
+        if (is_dir($tDir))
+        {
+          return $tDir;
+        }
       }
     }
 
@@ -99,7 +109,7 @@ class ClassHelper
       }
 
       $dir = $rootDir = \dirname($dir);
-      while (!file_exists($dir.'/composer.json'))
+      while (!file_exists($dir.'/composer.json') || false !== strpos($dir, 'vendor'))
       {
         if ($dir === \dirname($dir))
         {
